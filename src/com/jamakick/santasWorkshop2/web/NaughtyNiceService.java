@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -36,10 +37,10 @@ public class NaughtyNiceService {
 	}
 	
 	@PUT
-	@Path("/updatenaughty")
+	@Path("/updatenaughty/{id},{naughty}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateNaughty(Child child) {
-		naughtyImp.changeChildNaughtyStatus(child.getChildID(), child.getNaughty());
+	public Response updateNaughty(@PathParam("id") int id, @PathParam("naughty") boolean naughty) {
+		naughtyImp.changeChildNaughtyStatus(id, naughty);
 		return Response.status(200).build();
 	}
 

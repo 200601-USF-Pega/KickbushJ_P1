@@ -173,9 +173,10 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public Array totalDeliveredToys() {
+	public String[] totalDeliveredToys() {
 		
-		Array result = null;
+		Integer[] result = null;
+		String[] output = new String[2];
 		
 		try {
 			
@@ -187,17 +188,20 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 			
 			while (rs.next()) {
 				
-				result = rs.getArray("getdelivered");
+				result = (Integer[]) rs.getArray("getdelivered").getArray();
 				
+				for (int i = 0; i < result.length; i++) {
+					
+					output[i] = String.valueOf(result[i]);
+					
+				}
 			}
-			
-			return result;
-			
-			
+
+			return output;
 		}
 		
 		catch (SQLException e) {
-			return result;
+			return output;
 		}
 		
 	}
