@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 import com.jamakick.santasWorkshop2.dao.ElvenWorkersDAO;
 import com.jamakick.santasWorkshop2.object.Elf;
+import com.jamakick.santasWorkshop2.web.ConnectionManager;
 
 public class ElvenWorkersImp implements ElvenWorkersDAO {
+	
+	private Connection connection = ConnectionManager.getConnection();
 
 	@Override
-	public boolean addElvenWorker(Connection connection, Elf elf) {
+	public boolean addElvenWorker(Elf elf) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call addElf(?, ?, ?, ?, ?);");
@@ -34,7 +37,7 @@ public class ElvenWorkersImp implements ElvenWorkersDAO {
 	}
 
 	@Override
-	public boolean removeElvenWorker(Connection connection, int elvenID) {
+	public boolean removeElvenWorker(int elvenID) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call removeElf(?);");
@@ -52,7 +55,7 @@ public class ElvenWorkersImp implements ElvenWorkersDAO {
 	}
 
 	@Override
-	public boolean updateElvenWorkerToys(Connection connection, int elvenID) {
+	public boolean updateElvenWorkerToys(int elvenID) {
 
 		PreparedStatement pst;
 		try {
@@ -72,7 +75,7 @@ public class ElvenWorkersImp implements ElvenWorkersDAO {
 	}
 
 	@Override
-	public ArrayList<Elf> viewElvenWorkers(Connection connection) {
+	public ArrayList<Elf> viewElvenWorkers() {
 		
 		ArrayList<Elf> elves = new ArrayList<Elf>();
 		

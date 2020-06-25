@@ -10,11 +10,14 @@ import java.util.ArrayList;
 
 import com.jamakick.santasWorkshop2.dao.ToyHistoryDAO;
 import com.jamakick.santasWorkshop2.object.PastToy;
+import com.jamakick.santasWorkshop2.web.ConnectionManager;
 
 public class ToyHistoryImp implements ToyHistoryDAO {
+	
+	private Connection connection = ConnectionManager.getConnection();
 
 	@Override
-	public ArrayList<PastToy> getFullToyHistory(Connection connection) {
+	public ArrayList<PastToy> getFullToyHistory() {
 		
 		ArrayList<PastToy> toys = new ArrayList<PastToy>();
 		
@@ -51,7 +54,7 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public ArrayList<PastToy> getSpecificYearToyHistory(Connection connection, int year) {
+	public ArrayList<PastToy> getSpecificYearToyHistory(int year) {
 		
 		ArrayList<PastToy> toys = new ArrayList<PastToy>();
 		
@@ -91,7 +94,7 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public ArrayList<PastToy> getChildToys(Connection connection, int childID) {
+	public ArrayList<PastToy> getChildToys(int childID) {
 		
 		ArrayList<PastToy> toys = new ArrayList<PastToy>();
 		
@@ -131,7 +134,7 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public ArrayList<PastToy> viewToysMadeByWorker(Connection connection, int elvenID) {
+	public ArrayList<PastToy> viewToysMadeByWorker(int elvenID) {
 		
 		ArrayList<PastToy> toys = new ArrayList<PastToy>();
 		
@@ -170,7 +173,7 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public Array totalDeliveredToys(Connection connection) {
+	public Array totalDeliveredToys() {
 		
 		Array result = null;
 		
@@ -200,7 +203,7 @@ public class ToyHistoryImp implements ToyHistoryDAO {
 	}
 
 	@Override
-	public boolean insertIntoToyHistory(Connection connection, PastToy toy) {
+	public boolean insertIntoToyHistory(PastToy toy) {
 				
 		try {
 		PreparedStatement pst = connection.prepareStatement("call addToyToHistory(?, ?, ?, ?, ?, ?, ?)");

@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import com.jamakick.santasWorkshop2.dao.CurrentToysDAO;
 import com.jamakick.santasWorkshop2.object.FullProductionObject;
 import com.jamakick.santasWorkshop2.object.Toy;
+import com.jamakick.santasWorkshop2.web.ConnectionManager;
 
 public class CurrentToysImp  implements CurrentToysDAO {
+	
+	private Connection connection = ConnectionManager.getConnection();
 
 	@Override
-	public ArrayList<FullProductionObject> getFullToyProduction(Connection connection) {
+	public ArrayList<FullProductionObject> getFullToyProduction() {
 		
 		ArrayList<FullProductionObject> fullProd = new ArrayList<FullProductionObject>();
 		
@@ -56,7 +59,7 @@ public class CurrentToysImp  implements CurrentToysDAO {
 	}
 
 	@Override
-	public boolean addCurrentToy(Connection connection, Toy toy) {
+	public boolean addCurrentToy(Toy toy) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call addToy(?, ?, ?, ?, ?);");
@@ -78,7 +81,7 @@ public class CurrentToysImp  implements CurrentToysDAO {
 	}
 
 	@Override
-	public boolean removeCurrentToy(Connection connection, int toyID) {
+	public boolean removeCurrentToy(int toyID) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call removeToy(?);");
@@ -97,7 +100,7 @@ public class CurrentToysImp  implements CurrentToysDAO {
 	}
 
 	@Override
-	public Toy selectFromToysByID(Connection connection, int toyID) {
+	public Toy selectFromToysByID(int toyID) {
 		
 		Toy toy = new Toy();
 

@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 import com.jamakick.santasWorkshop2.dao.NaughtyNiceDAO;
 import com.jamakick.santasWorkshop2.object.Child;
+import com.jamakick.santasWorkshop2.web.ConnectionManager;
 
 public class NaughtyNiceImp implements NaughtyNiceDAO {
 	
+	private Connection connection = ConnectionManager.getConnection();
+	
 	@Override
-	public ArrayList<Child> getFullNaughtyNiceList(Connection connection) {
+	public ArrayList<Child> getFullNaughtyNiceList() {
 		
 		ArrayList<Child> children = new ArrayList<Child>();
 		
@@ -47,7 +50,7 @@ public class NaughtyNiceImp implements NaughtyNiceDAO {
 	}
 
 	@Override
-	public boolean addChildToList(Connection connection, Child child) {
+	public boolean addChildToList(Child child) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call insertChild(?, ?, ?);");
@@ -65,7 +68,7 @@ public class NaughtyNiceImp implements NaughtyNiceDAO {
 	}
 
 	@Override
-	public boolean changeChildNaughtyStatus(Connection connection, int childID, boolean naughty) {
+	public boolean changeChildNaughtyStatus(int childID, boolean naughty) {
 		
 		try {
 			PreparedStatement pst = connection.prepareStatement("Call changeChildNaughty(?, ?);");

@@ -7,11 +7,14 @@ import java.sql.SQLException;
 
 import com.jamakick.santasWorkshop2.dao.LoginDAO;
 import com.jamakick.santasWorkshop2.object.LoginInfo;
+import com.jamakick.santasWorkshop2.web.ConnectionManager;
 
 public class LoginImp implements LoginDAO {
+	
+	private Connection connection = ConnectionManager.getConnection();
 
 	@Override
-	public LoginInfo getLoginInfo(Connection connection, int empID) {
+	public LoginInfo getLoginInfo(int empID) {
 		
 		LoginInfo info = new LoginInfo();
 

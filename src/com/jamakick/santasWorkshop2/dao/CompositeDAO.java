@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface CompositeDAO {
 	
-	public boolean sendToyToHistory(Connection connection, int toyID,
+	public boolean sendToyToHistory(int toyID,
 			int newToyYear, boolean newToyDelivered);
 
 }

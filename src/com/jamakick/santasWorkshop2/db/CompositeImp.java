@@ -1,7 +1,5 @@
 package com.jamakick.santasWorkshop2.db;
 
-import java.sql.Connection;
-
 import com.jamakick.santasWorkshop2.dao.CompositeDAO;
 import com.jamakick.santasWorkshop2.dao.CurrentToysDAO;
 import com.jamakick.santasWorkshop2.dao.ElvenWorkersDAO;
@@ -16,10 +14,10 @@ public class CompositeImp implements CompositeDAO {
 	private ToyHistoryDAO toyHistoryService = new ToyHistoryImp();
 
 	@Override
-	public boolean sendToyToHistory(Connection connection, int toyID, int newToyYear,
+	public boolean sendToyToHistory(int toyID, int newToyYear,
 			boolean newToyDelivered) {
 		
-			Toy selectToy = currentToysService.selectFromToysByID(connection, toyID);
+			Toy selectToy = currentToysService.selectFromToysByID(toyID);
 			
 			if (selectToy.getToyName() == null) {
 				return false;
@@ -29,11 +27,11 @@ public class CompositeImp implements CompositeDAO {
 			toy.setYearProduced(newToyYear);
 			toy.setDelivered(newToyDelivered);
 			
-			currentToysService.removeCurrentToy(connection, toyID);
+			currentToysService.removeCurrentToy(toyID);
 			
-			elvenWorkersService.updateElvenWorkerToys(connection, toy.getElvenID());
+			elvenWorkersService.updateElvenWorkerToys(toy.getElvenID());
 		
-			toyHistoryService.insertIntoToyHistory(connection, toy);
+			toyHistoryService.insertIntoToyHistory(toy);
 			
 			return true;
 			
