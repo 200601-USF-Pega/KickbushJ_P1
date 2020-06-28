@@ -2,7 +2,9 @@ window.onload = onLoad;
 
 document.getElementById("signinButton").addEventListener("click", attemptSignin);
 
-document.querySelector("#toHome").addEventListener("click", function(){location.reload();});
+document.querySelector("#toHome").addEventListener("click", function() {
+	location.reload();
+});
 
 
 function onLoad() {
@@ -26,6 +28,7 @@ function onLoad() {
 		getContent("rss/managerhome.html");
 
 		document.querySelector("#toNN").addEventListener("click", manNaughtyNice);
+		document.querySelector("#toToy").addEventListener("click", manToy);
 
 	} else if (empId > 1) {
 
@@ -67,6 +70,13 @@ function empToy() {
 	getContent("rss/employeetoy.html");
 	showToyProduction();
 	showToyHistory();
+}
+
+function manToy() {
+
+	getContent("rss/managertoy.html");
+	showToyProduction();
+	showToyHistoryMan();
 }
 
 var toys = [];
@@ -166,7 +176,7 @@ function showToyHistory() {
 		}
 	};
 
-	let selection = ((document.querySelector("#searchHistoryBy")||{}).value)||"none";
+	let selection = ((document.querySelector("#searchHistoryBy") || {}).value) || "none";
 
 	if (selection == "year") {
 
@@ -184,16 +194,91 @@ function showToyHistory() {
 		}
 		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/childtoy/" + selectionValue, true);
 
+	} else if (selection == "worker") {
+
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/workertoy/" + sessionStorage.empId, true);
+
+
+	} else {
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/fullhist", true);
 	}
 
-	else if (selection == "worker") {
-
-		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/childtoy/" + sessionStorage.empId, true);
+	req.send();
 
 
-	}
+}
 
-	 else {
+function showToyHistoryMan() {
+	console.log("showing Toy History");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelectorAll("#historyTable tbody tr").forEach(function(e) {
+				e.remove()
+			});
+
+			toys = JSON.parse(this.responseText);
+			let table = document.querySelector("#historyTable tbody");
+
+			for (let i = 0; i < toys.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let toyID = row.insertCell(0);
+				toyID.innerHTML = toys[i].toyID;
+
+				let toyName = row.insertCell(1);
+				toyName.innerHTML = toys[i].toyName;
+
+				let toyColor = row.insertCell(2);
+				toyColor.innerHTML = toys[i].toyColor;
+
+				let workTime = row.insertCell(3);
+				workTime.innerHTML = toys[i].workTime.toFixed(2);
+
+				let childID = row.insertCell(4);
+				childID.innerHTML = toys[i].childID;
+
+				let elvenID = row.insertCell(5);
+				elvenID.innerHTML = toys[i].elvenID;
+
+				let yearProduced = row.insertCell(6);
+				yearProduced.innerHTML = toys[i].yearProduced;
+
+				let delivered = row.insertCell(7);
+				delivered.innerHTML = toys[i].delivered;
+
+			}
+		}
+	};
+
+	let selection = ((document.querySelector("#searchHistoryBy") || {}).value) || "none";
+
+	if (selection == "year") {
+
+		let selectionValue = document.querySelector("#selectionValue").value;
+		if (selectionValue.length == 0) {
+			selectionValue = 0;
+		}
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/yearhist/" + selectionValue, true);
+
+	} else if (selection == "child") {
+
+		let selectionValue = document.querySelector("#selectionValue").value;
+		if (selectionValue.length == 0) {
+			selectionValue = 0;
+		}
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/childtoy/" + selectionValue, true);
+
+	} else if (selection == "worker") {
+
+		let selectionValue = document.querySelector("#selectionValue").value;
+		if (selectionValue.length == 0) {
+			selectionValue = 0;
+		}
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/workertoy/" + selectionValue, true);
+
+
+	} else {
 		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/fullhist", true);
 	}
 
@@ -204,10 +289,9 @@ function showToyHistory() {
 
 function sendToyToHistory() {
 
-	let toyID = ((document.querySelector("#toyID")||{}).value)||"";
-	let yearProduced = ((document.querySelector("#yearProduced")||{}).value)||"0";
-	let delivered = ((document.querySelector("#delivered")||{}).checked)||"false";
-	console.log(delivered);
+	let toyID = ((document.querySelector("#toyID") || {}).value) || "";
+	let yearProduced = ((document.querySelector("#yearProduced") || {}).value) || "0";
+	let delivered = ((document.querySelector("#delivered") || {}).checked) || "false";
 
 
 	var req = new XMLHttpRequest();
@@ -217,9 +301,7 @@ function sendToyToHistory() {
 			document.querySelector("#yearProduced").value = "";
 			document.querySelector("#delivered").checked = false;
 			document.querySelector("#sendToyResult").innerHTML = "Toy Sent to History.";
-		}
-
-		else {
+		} else {
 			document.querySelector("#sendToyResult").innerHTML = "Toy was not Successfully sent to History.";
 		}
 	}
@@ -266,9 +348,9 @@ function showNaughtyNice() {
 
 function addChildToList() {
 	let child = {};
-	child.childName = ((document.querySelector("#childName")||{}).value)||"";
-	child.childAge = ((document.querySelector("#childAge")||{}).value)||"0";
-	child.naughty = ((document.querySelector("#naughty")||{}).checked)||"false";
+	child.childName = ((document.querySelector("#childName") || {}).value) || "";
+	child.childAge = ((document.querySelector("#childAge") || {}).value) || "0";
+	child.naughty = ((document.querySelector("#naughty") || {}).checked) || "false";
 
 
 	var req = new XMLHttpRequest();
@@ -278,9 +360,7 @@ function addChildToList() {
 			document.querySelector("#childAge").value = "";
 			document.querySelector("#naughty").checked = false;
 			document.querySelector("#addChildResult").innerHTML = "Child added.";
-		}
-
-		else {
+		} else {
 			document.querySelector("#addChildResult").innerHTML = "Child could not be added.";
 		}
 	}
@@ -292,10 +372,40 @@ function addChildToList() {
 
 }
 
+function createNewToy() {
+	let toy = {};
+
+	toy.toyName = ((document.querySelector("#toyName") || {}).value) || "";
+	toy.toyColor = ((document.querySelector("#toyColor") || {}).value) || "";
+	toy.workTime = ((document.querySelector("#workTime") || {}).value) || "0";
+	toy.childID = ((document.querySelector("#childID") || {}).value) || "0";
+	toy.elvenID = ((document.querySelector("#elvenID") || {}).value) || "0";
+
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#toyName").value = "";
+			document.querySelector("#toyColor").value = "";
+			document.querySelector("#workTime").value = "";
+			document.querySelector("#childID").value = "";
+			document.querySelector("#elvenID").value = "";
+			document.querySelector("#createToyResult").innerHTML = "Toy added.";
+		} else {
+			document.querySelector("#createToyResult").innerHTML = "Toy could not be added.";
+		}
+	}
+
+	req.open("POST", "http://localhost:8080/santasWorkshop2/workshop/toyservice/addtoy", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(toy));
+
+}
+
 function changeChildNaughty() {
 
-	let childID = ((document.querySelector("#childID")||{}).value)||"";
-	let naughty = ((document.querySelector("#updateNaughty")||{}).checked)||"false";
+	let childID = ((document.querySelector("#childID") || {}).value) || "";
+	let naughty = ((document.querySelector("#updateNaughty") || {}).checked) || "false";
 
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
@@ -303,9 +413,7 @@ function changeChildNaughty() {
 			document.querySelector("#childID").value = "";
 			document.querySelector("#updateNaughty").checked = false;
 			document.querySelector("#changeStatusResult").innerHTML = "Child ID: " + childID + " naughty status changed to " + naughty;
-		}
-
-		else {
+		} else {
 			document.querySelector("#changeStatusResult").innerHTML = "Child naughty status could not be changed.";
 		}
 	}
@@ -313,6 +421,24 @@ function changeChildNaughty() {
 	req.open("PUT", "http://localhost:8080/santasWorkshop2/workshop/nnservice/updatenaughty/" + childID + "," + naughty, true);
 	req.send();
 
+}
+
+function removeToy() {
+
+	let toyID = ((document.querySelector("#toyID") || {}).value) || "0";
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#toyID").value = "";
+			document.querySelector("#removeToyResult").innerHTML = "Toy ID: " + toyID + " removed from Production.";
+		} else {
+			document.querySelector("#removeToyResult").innerHTML = "Toy could not be removed from production.";
+		}
+	}
+
+	req.open("DELETE", "http://localhost:8080/santasWorkshop2/workshop/toyservice/deletetoy/" + toyID, true);
+	req.send();
 }
 
 function opensnackbar(message) {

@@ -42,6 +42,7 @@
 				<th>Toy Color</th>
 				<th>Work Time (hours)</th>
 				<th>Child ID</th>
+				<th>Worker ID</th>
 				<th>Year Produced</th>
 				<th>Delivered</th>
 			</tr>
@@ -57,13 +58,13 @@
 		<option value="none" selected="selected">None</option>
 		<option value="year">Year</option>
 		<option value="child">Child ID</option>
-		<option value="worker">Your Toys</option>
+		<option value="worker">Worker ID</option>
 
 	</select>
 
 	<input type="text" class="form-control" id="selectionValue">
 
-	<button type="submit" onclick="showToyHistory()">Refresh List</button>
+	<button type="submit" onclick="showToyHistoryMan()">Refresh List</button>
 
 </div>
 
@@ -73,16 +74,42 @@
 
 <div class="form-group">
 
-<label for="toyID">Toy ID to be sent: </label>
-<input type="number" class="form-control" id="toyID">
-<label for="yearProduced">Year Produced: </label>
-<input type="number" class="form-control" id="yearProduced">
-<label for="delivered">Was the Toy Delivered? Check if true: </label>
-<input type="checkbox" id="delivered" value="delivered">
+<label for="toyName">Toy Name: </label>
+<input type="text" class="form-control" id="toyName">
+<label for="toyColor">Toy Color: </label>
+<input type="text" class="form-control" id="toyColor">
+<label for="workTime">Work Time (in hours, decimals allowed ex: 3.5): </label>
+<input type="number" class="form-control" id="workTime">
+<label for="childID">Child ID the Toy is for: </label>
+<input type="number" class="form-control" id="childID">
+<label for="elvenID">Worker ID the Toy is being made by: </label>
+<input type="number" class="form-control" id="elvenID">
+
 <div class="container">
-<button type="submit" onclick="sendToyToHistory()">Send Toy</button>
+<button type="submit" onclick="createNewToy()">Create Toy</button>
 </div>
-<p id="sendToyResult"></p>
+<p id="createToyResult"></p>
+
+</div>
+
+
+
+</div>
+
+
+<div class="container" id="showContent">
+
+<h2>Remove Toy from Production</h2>
+
+<div class="form-group">
+
+<label for="toyID">Toy ID:</label>
+<input type="number" class="form-control" id="toyID">
+
+<div class="container">
+<button type="submit" onclick="removeToy()">Remove Toy</button>
+</div>
+<p id="removeToyResult"></p>
 
 </div>
 
