@@ -1,4 +1,3 @@
-
 window.onload = onLoad;
 
 document.getElementById("signinButton").addEventListener("click", attemptSignin);
@@ -12,33 +11,248 @@ function onLoad() {
 
 		console.log("not logged in");
 
-	}
-
-	else if (empId == 1) {
+	} else if (empId == 1) {
 
 		console.log("Manager logged in");
 
-		document.querySelectorAll("#body nav div ul .nav-item a").forEach(function(e) {e.className = "nav-link";});
+		document.querySelectorAll("#body nav div ul .nav-item a").forEach(function(e) {
+			e.className = "nav-link";
+		});
 
-		document.querySelector("#dropdownitem").style.visibility = "hidden";
+		makeLogoutButton();
 
 		getContent("rss/managerhome.html");
 
-	}
-
-	else if (empId > 1) {
+	} else if (empId > 1) {
 
 		console.log("Employee logged in");
 
-		document.querySelectorAll("#body nav div ul .nav-item a").forEach(function(e) {e.className = "nav-link";});
+		document.querySelectorAll("#body nav div ul .nav-item a").forEach(function(e) {
+			e.className = "nav-link";
+		});
 
 		document.querySelector("#workers a").className = "nav-link disabled";
 
-		document.querySelector("#dropdownitem").style.visibility = "hidden";
+		makeLogoutButton();
 
 		getContent("rss/employeehome.html");
 
+		document.querySelector("#toNN").addEventListener("click", empNaughtyNice);
+		document.querySelector("#toToy").addEventListener("click", empToy);
+
 	}
+
+}
+
+function empNaughtyNice() {
+
+	getContent("rss/employeenn.html");
+	showNaughtyNice();
+
+}
+
+function empToy() {
+
+	getContent("rss/employeetoy.html");
+	showToyProduction();
+	showToyHistory();
+}
+
+var toys = [];
+
+function showToyProduction() {
+	console.log("showing Toy Production");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelectorAll("#productionTable tbody tr").forEach(function(e) {
+				e.remove()
+			});
+
+			toys = JSON.parse(this.responseText);
+			let table = document.querySelector("#productionTable tbody");
+
+			for (let i = 0; i < toys.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let toyID = row.insertCell(0);
+				toyID.innerHTML = toys[i].toyID;
+
+				let toyName = row.insertCell(1);
+				toyName.innerHTML = toys[i].toyName;
+
+				let toyColor = row.insertCell(2);
+				toyColor.innerHTML = toys[i].toyColor;
+
+				let workTime = row.insertCell(3);
+				workTime.innerHTML = toys[i].workTime.toFixed(2);
+
+				let childName = row.insertCell(4);
+				childName.innerHTML = toys[i].childName;
+
+				let naughty = row.insertCell(5);
+				naughty.innerHTML = toys[i].naughty;
+
+				let elvenName = row.insertCell(6);
+				elvenName.innerHTML = toys[i].elvenName;
+
+				let positionName = row.insertCell(7);
+				positionName.innerHTML = toys[i].positionName;
+
+				let shiftNumber = row.insertCell(8);
+				shiftNumber.innerHTML = toys[i].shiftNumber;
+
+				let numProducedToys = row.insertCell(9);
+				numProducedToys.innerHTML = toys[i].numProducedToys;
+
+			}
+		}
+	};
+	req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/fullprod", true);
+	req.send();
+
+
+}
+
+
+function showToyHistory() {
+	console.log("showing Toy History");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelectorAll("#historyTable tbody tr").forEach(function(e) {
+				e.remove()
+			});
+
+			toys = JSON.parse(this.responseText);
+			let table = document.querySelector("#historyTable tbody");
+
+			for (let i = 0; i < toys.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let toyID = row.insertCell(0);
+				toyID.innerHTML = toys[i].toyID;
+
+				let toyName = row.insertCell(1);
+				toyName.innerHTML = toys[i].toyName;
+
+				let toyColor = row.insertCell(2);
+				toyColor.innerHTML = toys[i].toyColor;
+
+				let workTime = row.insertCell(3);
+				workTime.innerHTML = toys[i].workTime.toFixed(2);
+
+				let childID = row.insertCell(4);
+				childID.innerHTML = toys[i].childID;
+
+				let yearProduced = row.insertCell(5);
+				yearProduced.innerHTML = toys[i].yearProduced;
+
+				let delivered = row.insertCell(6);
+				delivered.innerHTML = toys[i].delivered;
+
+			}
+		}
+	};
+
+	let selection = ((document.querySelector("#searchHistoryBy")||{}).value)||"none";
+
+	if (selection == "year") {
+
+		let selectionValue = document.querySelector("#selectionValue").value;
+		if (selectionValue.length == 0) {
+			selectionValue = 0;
+		}
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/yearhist/" + selectionValue, true);
+
+	} else if (selection == "child") {
+
+		let selectionValue = document.querySelector("#selectionValue").value;
+		if (selectionValue.length == 0) {
+			selectionValue = 0;
+		}
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/childtoy/" + selectionValue, true);
+
+	}
+
+	else if (selection == "worker") {
+
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/childtoy/" + sessionStorage.empId, true);
+
+
+	}
+
+	 else {
+		req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/fullhist", true);
+	}
+
+	req.send();
+
+
+}
+
+function sendToyToHistory() {
+
+	let toyID = ((document.querySelector("#toyID")||{}).value)||"";
+	let yearProduced = ((document.querySelector("#yearProduced")||{}).value)||"0";
+	let delivered = ((document.querySelector("#delivered")||{}).checked)||"false";
+	console.log(delivered);
+
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#toyID").value = "";
+			document.querySelector("#yearProduced").value = "";
+			document.querySelector("#delivered").checked = false;
+			document.querySelector("#sendToyResult").innerHTML = "Toy Sent to History.";
+		}
+
+		else {
+			document.querySelector("#sendToyResult").innerHTML = "Toy was not Successfully sent to History.";
+		}
+	}
+
+	req.open("PUT", "http://localhost:8080/santasWorkshop2/workshop/toyservice/sendtoy/" + toyID + "," + yearProduced + "," + delivered, true);
+	req.send();
+}
+
+var children = [];
+
+function showNaughtyNice() {
+	console.log("showing Naughty Nice List");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelectorAll("#contentTable tbody tr").forEach(function(e) {
+				e.remove()
+			});
+
+			children = JSON.parse(this.responseText);
+			let table = document.querySelector("#contentTable tbody");
+
+			for (let i = 0; i < children.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let childID = row.insertCell(0);
+				childID.innerHTML = children[i].childID;
+
+				let childName = row.insertCell(1);
+				childName.innerHTML = children[i].childName;
+
+				let childAge = row.insertCell(2);
+				childAge.innerHTML = children[i].childAge;
+
+				let naughty = row.insertCell(3);
+				naughty.innerHTML = children[i].naughty;
+
+			}
+		}
+	};
+	req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/nnservice/allchildren", true);
+	req.send();
+
+
 
 }
 
@@ -50,7 +264,9 @@ function opensnackbar(message) {
 
 	x.className = "show";
 
-	setTimeout(function(){x.className = x.className.replace("show", ""); }, 3000);
+	setTimeout(function() {
+		x.className = x.className.replace("show", "");
+	}, 3000);
 }
 
 function attemptSignin() {
@@ -75,9 +291,7 @@ function attemptSignin() {
 					location.reload();
 				}, 1000);
 
-			}
-
-			else {
+			} else {
 				opensnackbar("Incorrect Login Details, Please Try Again.");
 			}
 
@@ -99,11 +313,39 @@ function getContent(resource) {
 	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
 			document.querySelector("#bodyBox").innerHTML = this.responseText;
-			}
+		}
 	}
 
 	req.open("GET", resource, true);
 	req.send();
 
+
+}
+
+
+function makeLogoutButton() {
+	var req = new XMLHttpRequest();
+
+	console.log("changing login button to logout.");
+
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			let menuItem = document.querySelector("#dropdownitem");
+			menuItem.innerHTML = this.responseText;
+			menuItem.className = "nav-item";
+
+			document.querySelector("#dropdownitem a").addEventListener("click", logout);
+		}
+	}
+
+	req.open("GET", "rss/logoutbutton.html", true);
+	req.send();
+
+}
+
+function logout() {
+
+	sessionStorage.clear();
+	location.reload();
 
 }

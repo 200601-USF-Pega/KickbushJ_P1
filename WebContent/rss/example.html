@@ -29,13 +29,13 @@
 		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#" id="toToy">Toys</a>
+					<a class="nav-link disabled" href="#">Toys</a>
 				</li>
 				<li class="nav-item" id="workers">
-					<a class="nav-link disabled" href="#" id="toWorker">Workers</a>
+					<a class="nav-link disabled" href="#">Workers</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#" id="toNN">Naughty Nice List</a>
+					<a class="nav-link disabled" href="#">Naughty Nice List</a>
 				</li>
 				<li class="nav-item dropdown dropleft" id="dropdownitem">
 					<a class="nav-link dropdown toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
@@ -59,14 +59,38 @@
 	</nav>
 
 
-	<div class="container" id="bodyBox">
-		<div class="container" id="myBox">
-		<h2>Welcome to the North Pole!</h2>
-		<p>This is the home of Santa's Workshop, where all the toys for christmas are made by our elves
-			for children around the world! As long as they are nice, that is. This application is made to help
-			manage the toy production in the workshop. Please login to view your available functionalities.</p>
-			<h3> Thank You for Visiting!</h3>
+	<div class="container" id="bodyBox2">
+
+		<div class="form-group">
+			<label for="boxLoc">Box Location: </label>
+			<input type="text" class="form-control" id="boxLoc" name="boxLoc">
+			<label for="boxWeight">Box Weight: </label>
+			<input type="number" class="form-control" id="boxWeight" name="boxWeight">
+			<button type="submit" onClick="submitBox()">Add Box</button>
+
 		</div>
+
+		<div class="container">
+			<button type="submit" onClick="getAllBoxes()">Get All Boxes</button>
+			<table class="table table-striped table-hover" id="boxTable">
+				<thead>
+					<tr>
+						<th>Box ID</th>
+						<th>Box Location</th>
+						<th>Box Weight</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+
+
 	</div>
 
 

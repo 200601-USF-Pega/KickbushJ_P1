@@ -39,13 +39,14 @@ img {
 }
 
 #bodyBox {
-	height: 90%;
+	height: auto;
 	width: 100%;
 	margin: 0;
 	max-width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 }
 
 #myBox {
@@ -57,6 +58,20 @@ img {
 	align-items: center;
 	height: 60%;
 	width: 60%;
+}
+
+#showContent {
+	background: rgb(6,0,70,.70);
+	box-shadow: 0px 0px 6px;
+	margin: 0.5em;
+}
+
+#showContent * {
+	color: #E5E5E5;
+}
+
+#showContent button {
+	background-color: rgb(6, 0, 70, .80);
 }
 
 #myBox h2 {
@@ -76,6 +91,9 @@ img {
 
 #signinButton {
 	margin-bottom: 1em;
+}
+
+#delivered {
 }
 
 .navbar-custom {
