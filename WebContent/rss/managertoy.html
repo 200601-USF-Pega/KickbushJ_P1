@@ -1,0 +1,91 @@
+<div class="container table-responsive" id="showContent">
+
+	<h2>Full Toy Production</h2>
+
+	<table class="table table-striped table-hover" id="productionTable">
+		<thead>
+			<tr>
+				<th>Toy ID</th>
+				<th>Toy Name</th>
+				<th>Toy Color</th>
+				<th>Work Time (hours)</th>
+				<th>Child Name</th>
+				<th>Naughty</th>
+				<th>Worker Name</th>
+				<th>Worker Position Name</th>
+				<th>Worker Shift Number</th>
+				<th>Worker Number of Produced Toys</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+		</tbody>
+
+	</table>
+
+	<button type="submit" onclick="showToyProduction()">Refresh List</button>
+
+</div>
+
+<div class="container table-responsive" id="showContent">
+
+	<h2>Toy History</h2>
+
+	<p>To filter results, use the dropdown menu and add a value if needed.</p>
+
+	<table class="table table-striped table-hover" id="historyTable">
+		<thead>
+			<tr>
+				<th>Toy ID</th>
+				<th>Toy Name</th>
+				<th>Toy Color</th>
+				<th>Work Time (hours)</th>
+				<th>Child ID</th>
+				<th>Year Produced</th>
+				<th>Delivered</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+		</tbody>
+
+	</table>
+
+	<select id="searchHistoryBy" name="searchHistoryBy">
+		<option value="none" selected="selected">None</option>
+		<option value="year">Year</option>
+		<option value="child">Child ID</option>
+		<option value="worker">Your Toys</option>
+
+	</select>
+
+	<input type="text" class="form-control" id="selectionValue">
+
+	<button type="submit" onclick="showToyHistory()">Refresh List</button>
+
+</div>
+
+<div class="container" id="showContent">
+
+<h2>Create Toy</h2>
+
+<div class="form-group">
+
+<label for="toyID">Toy ID to be sent: </label>
+<input type="number" class="form-control" id="toyID">
+<label for="yearProduced">Year Produced: </label>
+<input type="number" class="form-control" id="yearProduced">
+<label for="delivered">Was the Toy Delivered? Check if true: </label>
+<input type="checkbox" id="delivered" value="delivered">
+<div class="container">
+<button type="submit" onclick="sendToyToHistory()">Send Toy</button>
+</div>
+<p id="sendToyResult"></p>
+
+</div>
+
+
+
+</div>

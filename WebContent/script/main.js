@@ -2,6 +2,8 @@ window.onload = onLoad;
 
 document.getElementById("signinButton").addEventListener("click", attemptSignin);
 
+document.querySelector("#toHome").addEventListener("click", function(){location.reload();});
+
 
 function onLoad() {
 
@@ -23,6 +25,8 @@ function onLoad() {
 
 		getContent("rss/managerhome.html");
 
+		document.querySelector("#toNN").addEventListener("click", manNaughtyNice);
+
 	} else if (empId > 1) {
 
 		console.log("Employee logged in");
@@ -40,6 +44,7 @@ function onLoad() {
 		document.querySelector("#toNN").addEventListener("click", empNaughtyNice);
 		document.querySelector("#toToy").addEventListener("click", empToy);
 
+
 	}
 
 }
@@ -49,6 +54,12 @@ function empNaughtyNice() {
 	getContent("rss/employeenn.html");
 	showNaughtyNice();
 
+}
+
+function manNaughtyNice() {
+
+	getContent("rss/managernn.html");
+	showNaughtyNice();
 }
 
 function empToy() {
@@ -251,8 +262,56 @@ function showNaughtyNice() {
 	};
 	req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/nnservice/allchildren", true);
 	req.send();
+}
+
+function addChildToList() {
+	let child = {};
+	child.childName = ((document.querySelector("#childName")||{}).value)||"";
+	child.childAge = ((document.querySelector("#childAge")||{}).value)||"0";
+	child.naughty = ((document.querySelector("#naughty")||{}).checked)||"false";
 
 
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#childName").value = "";
+			document.querySelector("#childAge").value = "";
+			document.querySelector("#naughty").checked = false;
+			document.querySelector("#addChildResult").innerHTML = "Child added.";
+		}
+
+		else {
+			document.querySelector("#addChildResult").innerHTML = "Child could not be added.";
+		}
+	}
+
+	req.open("POST", "http://localhost:8080/santasWorkshop2/workshop/nnservice/addchild", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(child));
+
+
+}
+
+function changeChildNaughty() {
+
+	let childID = ((document.querySelector("#childID")||{}).value)||"";
+	let naughty = ((document.querySelector("#updateNaughty")||{}).checked)||"false";
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#childID").value = "";
+			document.querySelector("#updateNaughty").checked = false;
+			document.querySelector("#changeStatusResult").innerHTML = "Child ID: " + childID + " naughty status changed to " + naughty;
+		}
+
+		else {
+			document.querySelector("#changeStatusResult").innerHTML = "Child naughty status could not be changed.";
+		}
+	}
+
+	req.open("PUT", "http://localhost:8080/santasWorkshop2/workshop/nnservice/updatenaughty/" + childID + "," + naughty, true);
+	req.send();
 
 }
 
