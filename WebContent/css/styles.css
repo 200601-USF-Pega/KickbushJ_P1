@@ -14,6 +14,12 @@ body, html {
 	height: 100%;
 }
 
+body {
+	background-image: url("../img/snowfall.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
 
 /* no break */
 .nobr {
@@ -32,8 +38,104 @@ img {
   clear: both;
 }
 
-.container {
+#bodyBox {
+	height: 90%;
+	width: 100%;
+	margin: 0;
+	max-width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+
+#myBox {
+	background: rgb(6,0,70,.70);
+	box-shadow: 0px 0px 6px;
+	display:flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	height: 60%;
+	width: 60%;
+}
+
+#myBox h2 {
+	color: #E5E5E5;
+	font-size: 3em;
+}
+
+#myBox h3 {
+	color: #E5E5E5;
+	font-size: 2em;
+}
+
+#myBox p {
+	color: #E5E5E5;
+	text-align: center;
+}
+
+#signinButton {
+	margin-bottom: 1em;
+}
+
+.navbar-custom {
+	background: rgb(99,104,204);
+	background: linear-gradient(0deg, rgba(99,104,204,0) 0%, rgba(15,13,93,0.8662815467984069) 16%);
+}
+
+nav * {
+	color: #E5E5E5;
+}
+
+#ddm {
+	min-width: 15rem;
+}
+
+#ddm * {
+	color: black;
+}
+
+#snackbar {
+	visibility: hidden;
+	min-width: 250px;
+	margin-left: -125px;
+	background-color: rgb(6,0,70,.70);
+	color: #E5E5E5;
+	text-align: center;
+	border-radius: 2px;
+	padding: 16px;
+	position: fixed;
+	z-index: 1;
+	left: 50%;
+	bottom: 30px;
+}
+
+#snackbar.show {
+	visibility: visible;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
 
 
 

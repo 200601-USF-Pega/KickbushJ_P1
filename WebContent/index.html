@@ -18,50 +18,64 @@
 		<![endif]-->
 </head>
 
-<body>
+<body id="body">
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Welcome to Santa's Workshop!</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Toys</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Workers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Naughty Nice List</a>
-      </li>
-	  <li class="nav-item dropdown">
-		  <a class="nav-link dropdown toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	<nav class="navbar navbar-expand-lg navbar-custom">
+		<a class="navbar-brand" href="#">WS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+			<span class="navbar-toggler-icon">
+			</span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">Toys</a>
+				</li>
+				<li class="nav-item" id="workers">
+					<a class="nav-link disabled" href="#">Workers</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">Naughty Nice List</a>
+				</li>
+				<li class="nav-item dropdown dropleft" id="dropdownitem">
+					<a class="nav-link dropdown toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="ddm">
 
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="number" placeholder="Employee ID" aria-label="number">
-				<input class="form-control mr-sm-2" type="text" placeholder="password" aria-label="text">
-			</form>
-
-			<a class ="dropdown-item" href="#">Login</a>
+						<div class="px-4 py-3">
+							<div class="form-group">
+								<label for="dropdownID">Employee ID</label>
+								<input class="form-control" type="number" placeholder="id" id="dropdownID">
+							</div>
+							<div class="form-group">
+								<label for="dropdownPass">Password</label>
+								<input class="form-control" type="text" placeholder="password" id="dropdownPass" autocomplete="off">
+							</div>
+							<button type="submit" class="btn btn-primary float-right" id="signinButton">Sign in</button>
+						</div>
+					</div>
+				</li>
+			</ul>
 		</div>
-	  </li>
-    </ul>
-  </div>
-</nav>
+	</nav>
 
 
-	<div class="container">
-		<h2>This is the Index page for Santa's Workshop!</h2>
+	<div class="container" id="bodyBox">
+		<div class="container" id="myBox">
+		<h2>Welcome to the North Pole!</h2>
+		<p>This is the home of Santa's Workshop, where all the toys for christmas are made by our elves
+			for children around the world! As long as they are nice, that is. This application is made to help
+			manage the toy production in the workshop. Please login to view your available functionalities.</p>
+			<h3> Thank You for Visiting!</h3>
+		</div>
 	</div>
 
 
+	<div id="snackbar"></div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="script/main.js"></script>
 
 </body>
 
