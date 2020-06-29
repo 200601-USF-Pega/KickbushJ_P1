@@ -40,6 +40,7 @@ img {
 
 #bodyBox {
 	height: auto;
+	min-height: 90%;
 	width: 100%;
 	margin: 0;
 	max-width: 100%;
@@ -72,6 +73,10 @@ img {
 
 #showContent button {
 	background-color: rgb(6, 0, 70, .80);
+}
+
+#showContent input {
+	background-color: rgb(6, 0, 70, .95);
 }
 
 #myBox h2 {
