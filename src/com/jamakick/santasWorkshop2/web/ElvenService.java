@@ -18,7 +18,7 @@ import com.jamakick.santasWorkshop2.db.ElvenWorkersImp;
 import com.jamakick.santasWorkshop2.object.Elf;
 
 @Path("/elvenservice")
-public class ElvenWorkers {
+public class ElvenService {
 	
 	ElvenWorkersDAO elvenImp = new ElvenWorkersImp();
 	

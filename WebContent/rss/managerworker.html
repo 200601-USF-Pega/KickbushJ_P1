@@ -1,0 +1,76 @@
+<div class="container table-responsive" id="showContent">
+
+	<h2>View Workers</h2>
+
+	<table class="table table-striped table-hover" id="viewTable">
+		<thead>
+			<tr>
+				<th>Worker ID</th>
+				<th>Worker Name</th>
+				<th>Worker Age</th>
+				<th>Position Name</th>
+				<th>Shift Number</th>
+				<th>Number of Produced Toys</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+		</tbody>
+
+	</table>
+
+	<button type="submit" onclick="viewWorkers()">Refresh List</button>
+
+</div>
+
+<div class="container" id="showContent">
+
+<h2>Add Worker</h2>
+
+<div class="form-group">
+
+<label for="elvenName">Worker Name: </label>
+<input type="text" class="form-control" id="elvenName">
+<label for="elvenAge">Worker Age: </label>
+<input type="number" class="form-control" id="elvenAge">
+<label for="positionName">Position Name: </label>
+<input type="text" class="form-control" id="positionName">
+<label for="shiftNumber">Shift Number (1,2,3): </label>
+<input type="number" class="form-control" id="shiftNumber">
+<label for="numProducedToys">Number of Produced Toys: </label>
+<input type="number" class="form-control" id="numProducedToys">
+
+<div class="container">
+<button type="submit" onclick="addWorker()">Add Worker</button>
+</div>
+<p id="addWorkerResult"></p>
+
+</div>
+
+
+
+</div>
+
+
+<div class="container" id="showContent">
+
+<h2>Remove Worker From List</h2>
+
+<p>Worker will be unable to be removed if they currently are creating toys or have made a toy in the past.</p>
+
+<div class="form-group">
+
+<label for="elvenID">Worker ID:</label>
+<input type="number" class="form-control" id="elvenID">
+
+<div class="container">
+<button type="submit" onclick="removeWorker()">Remove Worker</button>
+</div>
+<p id="removeWorkerResult"></p>
+
+</div>
+
+
+
+</div>

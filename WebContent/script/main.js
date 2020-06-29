@@ -29,6 +29,7 @@ function onLoad() {
 
 		document.querySelector("#toNN").addEventListener("click", manNaughtyNice);
 		document.querySelector("#toToy").addEventListener("click", manToy);
+		document.querySelector("#toWorker").addEventListener("click", manWorker);
 
 	} else if (empId > 1) {
 
@@ -77,6 +78,126 @@ function manToy() {
 	getContent("rss/managertoy.html");
 	showToyProduction();
 	showToyHistoryMan();
+	showDeliveredScrapped();
+}
+
+function manWorker() {
+
+	getContent("rss/managerworker.html");
+	viewWorkers();
+}
+
+var workers = [];
+
+function viewWorkers() {
+
+	console.log("showing Elven Workers");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelectorAll("#viewTable tbody tr").forEach(function(e) {
+				e.remove()
+			});
+
+			workers = JSON.parse(this.responseText);
+			let table = document.querySelector("#viewTable tbody");
+
+			for (let i = 0; i < workers.length; ++i) {
+				let row = table.insertRow(table.rows.length);
+
+				let elvenID = row.insertCell(0);
+				elvenID.innerHTML = workers[i].elvenID;
+
+				let elvenName = row.insertCell(1);
+				elvenName.innerHTML = workers[i].elvenName;
+
+				let elvenAge = row.insertCell(2);
+				elvenAge.innerHTML = workers[i].elvenAge;
+
+				let positionName = row.insertCell(3);
+				positionName.innerHTML = workers[i].positionName;
+
+				let shiftNumber = row.insertCell(4);
+				shiftNumber.innerHTML = workers[i].shiftNumber;
+
+				let numProducedToys = row.insertCell(5);
+				numProducedToys.innerHTML = workers[i].numProducedToys;
+
+			}
+		}
+	};
+	req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/elvenservice/viewworkers", true);
+	req.send();
+
+}
+
+function addWorker() {
+
+	let worker = {};
+
+	worker.elvenName = ((document.querySelector("#elvenName") || {}).value) || "";
+	worker.elvenAge = ((document.querySelector("#elvenAge") || {}).value) || "0";
+	worker.positionName = ((document.querySelector("#positionName") || {}).value) || "";
+	worker.shiftNumber = ((document.querySelector("#shiftNumber") || {}).value) || "0";
+	worker.numProducedToys = ((document.querySelector("#numProducedToys") || {}).value) || "0";
+
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#elvenName").value = "";
+			document.querySelector("#elvenAge").value = "";
+			document.querySelector("#positionName").value = "";
+			document.querySelector("#shiftNumber").value = "";
+			document.querySelector("#numProducedToys").value = "";
+			document.querySelector("#addWorkerResult").innerHTML = "Worker added.";
+		} else {
+			document.querySelector("#addWorkerResult").innerHTML = "Worker could not be added.";
+		}
+	}
+
+	req.open("POST", "http://localhost:8080/santasWorkshop2/workshop/elvenservice/addworker", true);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(worker));
+
+}
+
+function removeWorker() {
+
+	let elvenID = ((document.querySelector("#elvenID") || {}).value) || "0";
+
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+			document.querySelector("#elvenID").value = "";
+			document.querySelector("#removeWorkerResult").innerHTML = "Worker ID: " + elvenID + " removed from List of Workers.";
+		} else {
+			document.querySelector("#removeWorkerResult").innerHTML = "Worker could not be removed.";
+		}
+	}
+
+	req.open("DELETE", "http://localhost:8080/santasWorkshop2/workshop/elvenservice/deleteworker/" + elvenID, true);
+	req.send();
+
+}
+
+
+
+function showDeliveredScrapped() {
+
+	console.log("showing Delivered vs Scrapped");
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status > 199 && this.status < 300) {
+
+			toys = JSON.parse(this.responseText);
+
+			document.querySelector("#insertDelivered").innerHTML = toys[0];
+			document.querySelector("#insertScrapped").innerHTML = toys[1];
+		}
+	};
+	req.open("GET", "http://localhost:8080/santasWorkshop2/workshop/toyservice/totaldeliv", true);
+	req.send();
 }
 
 var toys = [];
