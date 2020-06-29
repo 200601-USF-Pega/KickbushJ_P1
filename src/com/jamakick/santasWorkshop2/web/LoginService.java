@@ -7,6 +7,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jamakick.santasWorkshop2.dao.LoginDAO;
 import com.jamakick.santasWorkshop2.db.LoginImp;
 import com.jamakick.santasWorkshop2.object.LoginInfo;
@@ -16,6 +19,8 @@ import com.jamakick.santasWorkshop2.object.LoginReturn;
 public class LoginService {
 	
 	LoginDAO loginImp = new LoginImp();
+	
+	private static final Logger logger = LogManager.getLogger(LoginService.class);
 	
 	@POST
 	@Path("login/{id},{pass}")
@@ -27,11 +32,14 @@ public class LoginService {
 		
 		if (info.getPass().equals(pass)) {
 			output.setCorrectLoginInfo(true);
+			logger.debug("Login Succeed");
 		}
 		
 		else {
 			output.setCorrectLoginInfo(false);
+			logger.debug("Login Fail");
 		}
+	
 		
 		return Response.ok(output).build();
 		
